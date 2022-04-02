@@ -1,7 +1,41 @@
 <script lang="ts">
-    export let name = "Unnamed Counter";
-    export let description = "No description yet.";
-    export let color = "#ffffff";
+    import type Dexie from "dexie";
+
+    import { afterUpdate } from "svelte";
+
+    export let name: string = "Unnamed Counter";
+    export let description: string = "No description yet.";
+    export let color: string = "#ffffff";
+    export let id: number = 0;
+    export let db: Dexie;
+
+    let nameChanged: boolean = false;
+
+    let showEditor: boolean = false;
+
+    const doRename = async () => {
+        if (!nameChanged) {
+            showEditor = false;
+            return;
+        }
+
+        const counter = {
+            name: name,
+            description: description,
+            color: color,
+            id: id,
+        };
+        await db["counters"].put(counter);
+        showEditor = false;
+    };
+
+    let input: HTMLInputElement;
+
+    afterUpdate(() => {
+        if (showEditor) {
+            input.focus();
+        }
+    });
 </script>
 
 <body>
@@ -10,7 +44,33 @@
             <div class="color" style={`background: ${color}`} />
         </div>
         <div class="info">
-            <p class="title">{name}</p>
+            <!-- make title an editable name component -->
+            {#if showEditor}
+                <input
+                    class="editor"
+                    type="text"
+                    bind:value={name}
+                    bind:this={input}
+                    on:keypress={(e) => {
+                        if (e.key === "Enter") {
+                            doRename();
+                        } else {
+                            if (!nameChanged) {
+                                nameChanged = true;
+                            }
+                        }
+                    }}
+                />
+            {:else}
+                <p
+                    class="title"
+                    on:click={() => {
+                        showEditor = true;
+                    }}
+                >
+                    {name}
+                </p>
+            {/if}
             <p class="description">
                 {description}
             </p>
@@ -33,10 +93,9 @@
 
         &:hover {
             cursor: pointer;
-            background-color: white;
-            color: black;
-            transform: translateY(-6px);
         }
+
+        margin: 1rem 0 1rem 0;
     }
 
     .colorParent {
@@ -74,6 +133,22 @@
         font-size: 1.5rem;
         text-align: left;
         margin: 0;
+
+        border-bottom: 1px solid transparent;
+        margin-bottom: 0.5rem;
+
+        &:hover {
+            border-bottom: 1px solid white;
+        }
+    }
+
+    .editor {
+        @extend .title;
+
+        background-color: transparent;
+        color: white;
+        width: 100%;
+        font-size: 1rem;
     }
 
     .description {

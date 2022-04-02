@@ -11,7 +11,7 @@ import { onMount } from 'svelte';
         alert("IndexedDB is unsupported in this browser.");
     }
 
-    const db = new Dexie("SimpleCounter");
+    const db: Dexie = new Dexie("SimpleCounter");
 
     db.version(1).stores({
         counters: "++id, name, description, color"
@@ -33,6 +33,15 @@ import { onMount } from 'svelte';
         counters = await getCounters();
     });
     
+    const createCounter = async () => {
+        const counter = {
+            name: "Unnamed Counter",
+            description: "No description yet.",
+            color: "#ffffff"
+        };
+        await db["counters"].add(counter);
+        counters = await getCounters();
+    }
 
 </script>
 
@@ -40,9 +49,9 @@ import { onMount } from 'svelte';
     <div class="container">
         <h1>Simple Counter</h1>
         <h2>Keep track of things efficiently.</h2>
-        <button class="add">Create Counter</button>
+        <button class="add" on:click={createCounter}>Create Counter</button>
         {#each counters as counter (counter.id)}
-            <Counter name={counter.name} description={counter.description} color={counter.color} />
+            <Counter db={db} id={counter.id} name={counter.name} description={counter.description} color={counter.color} />
         {/each}
     </div>
 </body>

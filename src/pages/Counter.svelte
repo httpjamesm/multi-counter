@@ -65,6 +65,7 @@
                 <button class="bar" on:click={increment}>Add</button>
             </div>
         </div>
+        <p>Pro Tip: You can use SPACE to increment the counter!</p>
     </div>
 </body>
 
@@ -116,7 +117,7 @@
         text-align: center;
         border-radius: 5px;
         color: black;
-        border: 1px solid white;
+        border: none;
         background-color: transparent;
 
         display: flex;

@@ -84,4 +84,8 @@
             transform: translateY(-6px);
         }
     }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
 </style>

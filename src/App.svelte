@@ -7,6 +7,7 @@
     <div class="container">
         <h1>Simple Counter</h1>
         <h2>Keep track of things efficiently.</h2>
+        <button class="add">Create Counter</button>
         <Counter />
     </div>
 
@@ -32,6 +33,26 @@
 
     h2 {
         font-weight: normal;
+    }
+
+    .add {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid white;
+        color: white;
+        height: 3rem;
+
+        background: transparent;
+        text-align: center;
+
+        transition-duration: 512ms;
+
+        &:hover {
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            transform: translateY(-6px);
+        }
     }
 
 </style>

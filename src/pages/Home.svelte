@@ -1,6 +1,6 @@
 <script lang="ts">
     import Counter from "../components/Counter.svelte";
-    import { onMount } from 'svelte';
+    import { onMount } from "svelte";
 
     import type Dexie from "dexie";
 
@@ -13,17 +13,21 @@
 
     let counters = [];
 
+    const getCountersFromChild = async () => {
+        counters = await getCounters();
+    };
+
     // on mount
     onMount(async () => {
         counters = await getCounters();
-    }); 
+    });
 
     const createCounter = async () => {
         const counter = {
             name: "Unnamed Counter",
             description: "No description yet.",
             color: "#ffffff",
-            count: 0
+            count: 0,
         };
         await db["counters"].add(counter);
         counters = await getCounters();
@@ -42,6 +46,7 @@
                 name={counter.name}
                 description={counter.description}
                 color={counter.color}
+                getCounters={getCountersFromChild}
             />
         {/each}
     </div>

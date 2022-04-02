@@ -10,6 +10,7 @@
     export let color: string = "#ffffff";
     export let id: number = 0;
     export let db: Dexie;
+    export let getCounters: () => void;
 </script>
 
 <body>
@@ -24,7 +25,7 @@
                 <EditableDescription {db} {id} {description} />
             </div>
         </div>
-        <ActionBar {id} />
+        <ActionBar {db} {id} {getCounters} />
     </div>
 </body>
 
@@ -47,7 +48,7 @@
         border-radius: 10px;
         border: 1px solid white;
         color: white;
-        height: 7rem;
+        height: 7.25rem;
         padding: 1rem;
         display: flex;
         flex-direction: column;

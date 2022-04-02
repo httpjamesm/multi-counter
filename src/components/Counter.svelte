@@ -1,7 +1,8 @@
 <script lang="ts">
     import type Dexie from "dexie";
+    import ActionBar from "./Counter/ActionBar.svelte";
     import EditableColor from "./Counter/EditableColor.svelte";
-import EditableDescription from "./Counter/EditableDescription.svelte";
+    import EditableDescription from "./Counter/EditableDescription.svelte";
     import EditableName from "./Counter/EditableName.svelte";
 
     export let name: string = "Unnamed Counter";
@@ -13,18 +14,26 @@ import EditableDescription from "./Counter/EditableDescription.svelte";
 
 <body>
     <div class="container">
-        <div class="colorParent">
-            <EditableColor {db} {id} {color} />
+        <div class="top">
+            <div class="colorParent">
+                <EditableColor {db} {id} {color} />
+            </div>
+            <div class="info">
+                <!-- make title an editable name component -->
+                <EditableName {db} {id} {name} />
+                <EditableDescription {db} {id} {description} />
+            </div>
         </div>
-        <div class="info">
-            <!-- make title an editable name component -->
-            <EditableName {db} {id} {name} />
-            <EditableDescription {db} {id} {description} />
-        </div>
+        <ActionBar />
     </div>
 </body>
 
 <style lang="scss">
+    .top {
+        width: 100%;
+        display: flex;
+    }
+
     .colorParent {
         width: 40%;
         height: 100%;
@@ -38,10 +47,10 @@ import EditableDescription from "./Counter/EditableDescription.svelte";
         border-radius: 10px;
         border: 1px solid white;
         color: white;
-        height: 5rem;
+        height: 7rem;
         padding: 1rem;
         display: flex;
-        align-items: center;
+        flex-direction: column;
 
         transition-duration: 512ms;
 

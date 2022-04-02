@@ -49,6 +49,21 @@
                 getCounters={getCountersFromChild}
             />
         {/each}
+        <p>
+            Made with love by <a
+                href="https://httpjames.space"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                http.james</a
+            >
+            in
+            <a
+                href="https://svelte.dev"
+                target="_blank"
+                rel="noopener noreferrer">Svelte</a
+            >.
+        </p>
     </div>
 </body>
 

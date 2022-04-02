@@ -12,7 +12,7 @@
 
 </body>
 
-<style>
+<style lang="scss">
     :global(body) {
         padding: 0;
         margin: 0;

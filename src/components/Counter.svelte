@@ -18,7 +18,7 @@
     </div>
 </body>
 
-<style>
+<style lang="scss">
     .container {
         width: 20rem;
         border-radius: 10px;
@@ -28,6 +28,15 @@
         padding: 1rem;
         display: flex;
         align-items: center;
+
+        transition-duration: 512ms;
+
+        &:hover {
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            transform: translateY(-6px);
+        }
     }
 
     .colorParent {
@@ -42,6 +51,14 @@
         width: 5rem;
         height: 5rem;
         border-radius: 10px;
+
+        border: 1px solid black;
+
+        transition-duration: 512ms;
+
+        &:hover {
+            box-shadow: 0 5px 10px 1px rgb(77, 77, 77);
+        }
     }
 
     .info {

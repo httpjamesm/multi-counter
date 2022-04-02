@@ -1,16 +1,50 @@
 <script lang="ts">
+
+import { onMount } from 'svelte';
+
+
     import Counter from "./components/Counter.svelte";
+
+    import Dexie from "dexie";
+
+    if (!window.indexedDB) {
+        alert("IndexedDB is unsupported in this browser.");
+    }
+
+    const db = new Dexie("SimpleCounter");
+
+    db.version(1).stores({
+        counters: "++id, name, description, color"
+    });
+
+    db.open().catch(function(e) {
+        alert("Open failed: " + e);
+    });
+
+    const getCounters = async () =>{ 
+        const counters = await db["counters"].toArray();
+        return counters;
+    }
+
+    let counters = [];
+
+    // on mount
+    onMount(async () => {
+        counters = await getCounters();
+    });
+    
+
 </script>
 
 <body>
-
     <div class="container">
         <h1>Simple Counter</h1>
         <h2>Keep track of things efficiently.</h2>
         <button class="add">Create Counter</button>
-        <Counter />
+        {#each counters as counter (counter.id)}
+            <Counter name={counter.name} description={counter.description} color={counter.color} />
+        {/each}
     </div>
-
 </body>
 
 <style lang="scss">
@@ -54,5 +88,4 @@
             transform: translateY(-6px);
         }
     }
-
 </style>

@@ -47,7 +47,7 @@ import { onMount } from 'svelte';
 
 <body>
     <div class="container">
-        <h1>Simple Counter</h1>
+        <h1>Multi Counter</h1>
         <h2>Keep track of things efficiently.</h2>
         <button class="add" on:click={createCounter}>Create Counter</button>
         {#each counters as counter (counter.id)}

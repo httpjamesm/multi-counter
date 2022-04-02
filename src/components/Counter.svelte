@@ -24,7 +24,7 @@
                 <EditableDescription {db} {id} {description} />
             </div>
         </div>
-        <ActionBar />
+        <ActionBar {id} />
     </div>
 </body>
 

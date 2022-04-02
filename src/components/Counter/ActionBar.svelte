@@ -1,10 +1,17 @@
 <script lang="ts">
     import FaRegArrowAltCircleRight from 'svelte-icons/fa/FaRegArrowAltCircleRight.svelte'
+
+    import { Link } from 'svelte-routing';
+
+    export let id: number;
+
 </script>
 
 <div class="bar">
     <div class="icon">
-        <FaRegArrowAltCircleRight />
+        <Link to={`/counter?c=${id}`}>
+            <FaRegArrowAltCircleRight />
+        </Link>
     </div>
 </div>
 

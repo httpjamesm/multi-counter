@@ -5,7 +5,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --no-clear",
+    "start": "sirv public --no-clear --single",
+    "start:dev": "sirv public --dev --single",
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "devDependencies": {
@@ -30,6 +31,7 @@
     "dexie": "^3.2.1",
     "sass-embedded": "^1.49.11",
     "sirv-cli": "^2.0.0",
-    "svelte-icons": "^2.1.0"
+    "svelte-icons": "^2.1.0",
+    "svelte-routing": "^1.6.0"
   }
 }

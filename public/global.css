@@ -61,3 +61,11 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
+
+h2 {
+    font-weight: normal;
+}
+
+h1, h2 {
+    margin: 0;
+}

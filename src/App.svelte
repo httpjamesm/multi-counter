@@ -1,11 +1,11 @@
 <script lang="ts">
 
-import { onMount } from 'svelte';
-
-
-    import Counter from "./components/Counter.svelte";
+    import { Router, Route } from "svelte-routing";
 
     import Dexie from "dexie";
+    
+    import Home from "./pages/Home.svelte";
+    import Counter from "./pages/Counter.svelte";
 
     if (!window.indexedDB) {
         alert("IndexedDB is unsupported in this browser.");
@@ -14,87 +14,22 @@ import { onMount } from 'svelte';
     const db: Dexie = new Dexie("SimpleCounter");
 
     db.version(1).stores({
-        counters: "++id, name, description, color"
+        counters: "++id, name, description, color, count"
     });
 
     db.open().catch(function(e) {
         alert("Open failed: " + e);
     });
 
-    const getCounters = async () =>{ 
-        const counters = await db["counters"].toArray();
-        return counters;
-    }
-
-    let counters = [];
-
-    // on mount
-    onMount(async () => {
-        counters = await getCounters();
-    });
-    
-    const createCounter = async () => {
-        const counter = {
-            name: "Unnamed Counter",
-            description: "No description yet.",
-            color: "#ffffff"
-        };
-        await db["counters"].add(counter);
-        counters = await getCounters();
-    }
-
 </script>
 
-<body>
-    <div class="container">
-        <h1>Multi Counter</h1>
-        <h2>Keep track of things efficiently.</h2>
-        <button class="add" on:click={createCounter}>Create Counter</button>
-        {#each counters as counter (counter.id)}
-            <Counter db={db} id={counter.id} name={counter.name} description={counter.description} color={counter.color} />
-        {/each}
-    </div>
-</body>
-
-<style lang="scss">
-    :global(body) {
-        padding: 0;
-        margin: 0;
-    }
-
-    body {
-        background: #171717;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .container {
-        color: white;
-        text-align: center;
-    }
-
-    h2 {
-        font-weight: normal;
-    }
-
-    .add {
-        width: 100%;
-        border-radius: 10px;
-        border: 1px solid white;
-        color: white;
-        height: 3rem;
-
-        background: transparent;
-        text-align: center;
-
-        transition-duration: 512ms;
-
-        &:hover {
-            cursor: pointer;
-            background-color: white;
-            color: black;
-            transform: translateY(-6px);
-        }
-    }
-</style>
+<Router>
+    <Route path="/">
+        <Home db={db} />
+    </Route>
+    <Route path="counter">
+        <Counter 
+            db={db}
+         />
+    </Route>
+</Router>
